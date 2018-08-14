@@ -1,29 +1,36 @@
-#include "qtbrainweaverruffianqtconceptmap_test.h"
+#include "ruffian.h"
 
-#include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
-#include <QDesktopWidget>
+#include <QWidget>
+#include <QTimer>
 
+#include "qtconceptmap.h"
 #include "qtconceptmapconcepteditdialog.h"
-#include "conceptmapfactory.h"
 
-ribi::brar::QtConceptMapTest::QtConceptMapTest()
-  : m_qtconceptmap{new ribi::cmap::QtConceptMap}
+Ruffian::Ruffian(int &argc, char **argv)
+  : QApplication(argc, argv),
+    m_ticks{0}
 {
-  m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
-  m_qtconceptmap->SetConceptMap(
-    ribi::cmap::ConceptMapFactory().GetRated()
-  );
-  m_qtconceptmap->show();
+  //Ruffian::startTimer(100);
 
-  startTimer(100);
+  {
+    QTimer * const timer{new QTimer};
+    connect(timer, SIGNAL(timeout()), this, SLOT(PressRandomButton()));
+    //timer->start(100);
+  }
 }
 
-void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
+void Ruffian::timerEvent(QTimerEvent *)
+{
+  PressRandomButton();
+}
+
+void Ruffian::PressRandomButton()
 {
   ++m_ticks;
   qDebug() << m_ticks;
+  this->processEvents();
   ribi::cmap::QtConceptMap * const qtconceptmap = qobject_cast<
     ribi::cmap::QtConceptMap*
   >(
@@ -38,14 +45,12 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
       QKeyEvent e(QEvent::Type::KeyPress, Qt::Key_Space, Qt::NoModifier);
       qtconceptmap->keyPressEvent(&e);
     }
-    /*
     if (m_ticks % 2 == 1)
     {
       qDebug() << "Press F2";
       QKeyEvent e(QEvent::Type::KeyPress, Qt::Key_F2, Qt::NoModifier);
       qtconceptmap->keyPressEvent(&e);
     }
-    */
     return;
   }
   ribi::cmap::QtConceptMapConceptEditDialog * const edit_concept = qobject_cast<
