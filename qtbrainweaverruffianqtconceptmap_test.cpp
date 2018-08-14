@@ -3,18 +3,20 @@
 #include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <QDesktopWidget>
 
 #include "qtconceptmapconcepteditdialog.h"
 #include "conceptmapfactory.h"
 
 ribi::brar::QtConceptMapTest::QtConceptMapTest()
-  : m_qtconceptmap{new ribi::cmap::QtConceptMap}
+  : m_qtconceptmap{new ribi::cmap::QtConceptMap},
+    m_ticks{0}
 {
-  m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
   );
+  m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->show();
 
   startTimer(100);
@@ -24,40 +26,56 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
   qDebug() << m_ticks;
-  ribi::cmap::QtConceptMap * const qtconceptmap = qobject_cast<
-    ribi::cmap::QtConceptMap*
-  >(
-    QApplication::activeWindow()
-  );
-  if (qtconceptmap)
+  const int event_type{std::rand() % 5};
+  if (event_type == 0)
   {
-    qDebug() << "QtConceptMap active";
-    if (m_ticks % 2 == 0)
+    Qt::Key key = Qt::Key_Space;
+    switch (std::rand() % 6)
     {
-      qDebug() << "Press space";
-      QKeyEvent e(QEvent::Type::KeyPress, Qt::Key_Space, Qt::NoModifier);
-      qtconceptmap->keyPressEvent(&e);
+      case 0: key = Qt::Key_Space; break;
+      case 1: key = Qt::Key_Left; break;
+      case 2: key = Qt::Key_Right; break;
+      case 3: key = Qt::Key_Up; break;
+      case 4: key = Qt::Key_Down; break;
+      case 5: key = Qt::Key_F2; break;
     }
-    /*
-    if (m_ticks % 2 == 1)
+    Qt::KeyboardModifier modifier = Qt::NoModifier;
+    switch (std::rand() % 4)
     {
-      qDebug() << "Press F2";
-      QKeyEvent e(QEvent::Type::KeyPress, Qt::Key_F2, Qt::NoModifier);
-      qtconceptmap->keyPressEvent(&e);
+      case 0: modifier = Qt::NoModifier; break;
+      case 1: modifier = Qt::ShiftModifier; break;
+      case 2: modifier = Qt::ControlModifier; break;
+      case 3: modifier = Qt::AltModifier; break;
     }
-    */
-    return;
+
+    QKeyEvent e(QEvent::Type::KeyPress, key, modifier);
+    m_qtconceptmap->keyPressEvent(&e);
   }
-  ribi::cmap::QtConceptMapConceptEditDialog * const edit_concept = qobject_cast<
-      ribi::cmap::QtConceptMapConceptEditDialog*
-    >(
-      QApplication::activeWindow()
-    );
-  if (edit_concept)
+  else if (event_type == 1)
   {
-    qDebug() << "QtConceptMapConceptEditDialog active";
-    qDebug() << "Close active window with ALT+O";
-    QKeyEvent e(QEvent::Type::KeyPress, Qt::Key_O, Qt::AltModifier);
-    edit_concept->keyPressEvent(&e);
+    const QPointF localPos(std::rand() % width(), std::rand() % height());
+    Qt::MouseButton button;
+    switch (std::rand() % 2)
+    {
+      case 0: button = Qt::LeftButton; break;
+      case 1: button = Qt::RightButton; break;
+    }
+    Qt::MouseButtons buttons;
+    Qt::KeyboardModifiers modifiers;
+    QMouseEvent event(QEvent::Type::MouseButtonDblClick, localPos, button, buttons, modifiers);
+    m_qtconceptmap->mouseDoubleClickEvent(&event);
+  }
+  else if (event_type == 2)
+  {
+    //Qt::MouseButton button = Qt::NoButton;
+    //m_qtconceptmap->mouseMoveEvent();
+  }
+  else if (event_type == 3)
+  {
+    //m_qtconceptmap->mousePressEvent()
+  }
+  else if (event_type == 4)
+  {
+    //m_qtconceptmap->mouseReleaseEvent()
   }
 }
