@@ -95,27 +95,19 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
   {
     case 0:
     {
-      /*
-      const int x_mouse{GetRandomX()};
-      const int y_mouse{GetRandomY()};
       const QPointF local_pos{
-        m_qtconceptmap->mapToScene(x_mouse, y_mouse)
+        m_qtconceptmap->sceneRect().topLeft()
+        + QPointF(
+          std::rand() % static_cast<int>(m_qtconceptmap->sceneRect().width()),
+          std::rand() % static_cast<int>(m_qtconceptmap->sceneRect().height())
+        )
       };
-      qDebug() << "mouse:" << x_mouse << ", "<< y_mouse;
-      */
-      //const int y_mouse{GetRandomY()};
-      const QPointF local_pos{
-        m_qtconceptmap->sceneRect().center()
-      };
-      //qDebug() << "mouse:" << x_mouse << ", "<< y_mouse;
-
-      qDebug() << "local_pos:" << local_pos;
       return local_pos;
     }
     case 1: return
       QPointF(
-        m_qtconceptmap->GetQtToolItem().pos().x() + 8.0,
-        m_qtconceptmap->GetQtToolItem().pos().y() + 8.0
+        m_qtconceptmap->GetQtToolItem().pos().x() + 12.0,
+        m_qtconceptmap->GetQtToolItem().pos().y() + 36.0
       );
   }
   assert(!"Should not get here"); //!OCLINT
@@ -163,18 +155,13 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     m_qtconceptmap->keyPressEvent(&e);
     return;
   }
-  qDebug() << "Mouse event";
   const QPointF localPos(GetRandomLocalPos());
   const Qt::MouseButton button = GetRandomMouseButton();
   const Qt::MouseButtons buttons = Qt::NoButton;
   const QPoint mousePos = m_qtconceptmap->pos()
     + m_qtconceptmap->mapFromScene(localPos)
   ;
-  qDebug() << "localPos:" << localPos;
-  qDebug() << "mousePos:" << mousePos;
   m_qtconceptmap->cursor().setPos(mousePos);
-  assert(mousePos.y() > 0);
-  return;
   const Qt::KeyboardModifiers modifiers = GetRandomKeyboardModifiers();
   if (event_type == 1)
   {
