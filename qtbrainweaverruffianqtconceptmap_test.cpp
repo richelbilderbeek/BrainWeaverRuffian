@@ -20,7 +20,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest()
   m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->show();
 
-  startTimer(100);
+  startTimer(1);
 }
 
 Qt::Key ribi::brar::QtConceptMapTest::GetRandomKey() noexcept
@@ -35,32 +35,32 @@ Qt::Key ribi::brar::QtConceptMapTest::GetRandomKey() noexcept
     Qt::Key_Up,
     Qt::Key_Down,
     //Qt::Key_Delete,
-    Qt::Key_A,
-    Qt::Key_B,
-    Qt::Key_C,
-    Qt::Key_D,
+    //Qt::Key_A,
+    //Qt::Key_B,
+    //Qt::Key_C,
+    //Qt::Key_D,
     Qt::Key_E,
-    Qt::Key_F,
-    Qt::Key_G,
+    //Qt::Key_F,
+    //Qt::Key_G,
     Qt::Key_H,
-    Qt::Key_I,
-    Qt::Key_J,
-    Qt::Key_K,
-    Qt::Key_L,
-    Qt::Key_M,
-    //Qt::Key_N,
-    Qt::Key_O,
-    Qt::Key_P,
-    Qt::Key_Q,
-    Qt::Key_R,
-    Qt::Key_S,
-    Qt::Key_T,
-    Qt::Key_U,
-    Qt::Key_V,
-    Qt::Key_W,
-    Qt::Key_X,
-    Qt::Key_Y,
-    Qt::Key_Z
+    //Qt::Key_I,
+    //Qt::Key_J,
+    //Qt::Key_K,
+    //Qt::Key_L,
+    //Qt::Key_M,
+    Qt::Key_N,
+    //Qt::Key_O,
+    //Qt::Key_P,
+    //Qt::Key_Q,
+    //Qt::Key_R,
+    //Qt::Key_S,
+    Qt::Key_T
+    //Qt::Key_U,
+    //Qt::Key_V,
+    //Qt::Key_W,
+    //Qt::Key_X,
+    //Qt::Key_Y,
+    //Qt::Key_Z
   };
   return key[ std::rand() % key.size() ];
 }
@@ -122,7 +122,7 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
           m_qtconceptmap->GetQtToolItem().pos().y() + 12.0
         );
       }
-      return QPointF();
+      break;
     }
     case 3: //Random on window
     {
@@ -161,7 +161,7 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
       return local_pos;
     }
   }
-  return QPointF();
+  return GetRandomLocalPos();
 }
 
 Qt::MouseButton ribi::brar::QtConceptMapTest::GetRandomMouseButton() noexcept
@@ -194,7 +194,7 @@ int ribi::brar::QtConceptMapTest::GetRandomY() noexcept
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
-  qDebug() << m_ticks;
+  //qDebug() << m_ticks;
   const int event_type{std::rand() % 5};
   if (event_type == 0)
   {
