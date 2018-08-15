@@ -3,6 +3,7 @@
 
 #include "qtconceptmap.h"
 #include <QDialog>
+#include <QEvent>
 
 namespace ribi {
 namespace brar {
@@ -18,11 +19,14 @@ public:
 
   QPointF GetRandomLocalPos() noexcept;
   Qt::Key GetRandomKey() noexcept;
+  QKeyEvent GetRandomKeyEvent() noexcept;
   int GetRandomX() noexcept;
   int GetRandomY() noexcept;
   Qt::KeyboardModifier GetRandomKeyboardModifier() noexcept;
   Qt::KeyboardModifiers GetRandomKeyboardModifiers() noexcept;
   Qt::MouseButton GetRandomMouseButton() noexcept;
+  QMouseEvent GetRandomMouseEvent() noexcept;
+  QEvent::Type GetRandomMouseEventType() noexcept;
 
 private slots:
 

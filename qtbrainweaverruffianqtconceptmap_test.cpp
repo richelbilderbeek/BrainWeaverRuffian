@@ -195,6 +195,29 @@ Qt::MouseButton ribi::brar::QtConceptMapTest::GetRandomMouseButton() noexcept
   return buttons[ std::rand() % buttons.size() ];
 }
 
+QMouseEvent ribi::brar::QtConceptMapTest::GetRandomMouseEvent() noexcept
+{
+  const QEvent::Type type = GetRandomMouseEventType();
+  const QPointF localPos(GetRandomLocalPos());
+  const Qt::MouseButton button = GetRandomMouseButton();
+  const Qt::MouseButtons buttons = Qt::NoButton;
+  const Qt::KeyboardModifiers modifiers = GetRandomKeyboardModifiers();
+  return QMouseEvent(type, localPos, button, buttons, modifiers);
+}
+
+QEvent::Type ribi::brar::QtConceptMapTest::GetRandomMouseEventType() noexcept
+{
+  switch (std::rand() % 4)
+  {
+    case 0: return QEvent::Type::MouseButtonDblClick;
+    case 1: return QEvent::Type::MouseButtonPress;
+    case 2: return QEvent::Type::MouseButtonRelease;
+    case 3: return QEvent::Type::MouseMove;
+  }
+  assert(!"Should not get here");
+  return QEvent::Type::MouseButtonPress;
+}
+
 int ribi::brar::QtConceptMapTest::GetRandomX() noexcept
 {
   return m_qtconceptmap->geometry().left()
@@ -212,6 +235,13 @@ int ribi::brar::QtConceptMapTest::GetRandomY() noexcept
   return y;
 }
 
+QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
+{
+  const Qt::Key key = GetRandomKey();
+  Qt::KeyboardModifier modifier = GetRandomKeyboardModifier();
+  return QKeyEvent(QEvent::Type::KeyPress, key, modifier);
+}
+
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
@@ -219,64 +249,29 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   const int event_type{std::rand() % 5};
   if (event_type == 0)
   {
-    const Qt::Key key = GetRandomKey();
-    Qt::KeyboardModifier modifier = GetRandomKeyboardModifier();
-
-    QKeyEvent e(QEvent::Type::KeyPress, key, modifier);
-    m_qtconceptmap->keyPressEvent(&e);
+    QKeyEvent event = GetRandomKeyEvent();
+    m_qtconceptmap->keyPressEvent(&event);
     return;
   }
-  const QPointF localPos(GetRandomLocalPos());
-  const Qt::MouseButton button = GetRandomMouseButton();
-  const Qt::MouseButtons buttons = Qt::NoButton;
+  QMouseEvent event = GetRandomMouseEvent();
   const QPoint mousePos = (m_qtconceptmap->pos()
-    + m_qtconceptmap->mapFromScene(localPos)) + QPoint(0, 27)
+    + m_qtconceptmap->mapFromScene(event.localPos())) + QPoint(0, 27)
   ;
   m_qtconceptmap->cursor().setPos(mousePos);
-  const Qt::KeyboardModifiers modifiers = GetRandomKeyboardModifiers();
-  if (event_type == 1)
+  if (event.type() == QEvent::Type::MouseButtonDblClick)
   {
-    return;
-    QMouseEvent event(
-      QEvent::Type::MouseButtonDblClick,
-      localPos,
-      button,
-      buttons,
-      modifiers
-    );
     m_qtconceptmap->mouseDoubleClickEvent(&event);
   }
-  if (event_type == 2)
+  if (event.type() == QEvent::Type::MouseMove)
   {
-    QMouseEvent event(
-      QEvent::Type::MouseMove,
-      localPos,
-      Qt::NoButton,
-      buttons,
-      modifiers
-    );
     m_qtconceptmap->mouseMoveEvent(&event);
   }
-  else if (event_type == 3)
+  else if (event.type() == QEvent::Type::MouseButtonPress)
   {
-    QMouseEvent event(
-      QEvent::Type::MouseButtonPress,
-      localPos,
-      button,
-      buttons,
-      modifiers
-    );
     m_qtconceptmap->mousePressEvent(&event);
   }
-  else if (event_type == 4)
+  else if (event.type() == QEvent::Type::MouseButtonRelease)
   {
-    QMouseEvent event(
-      QEvent::Type::MouseButtonRelease,
-      localPos,
-      button,
-      buttons,
-      modifiers
-    );
     m_qtconceptmap->mouseReleaseEvent(&event);
   }
 }
