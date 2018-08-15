@@ -93,7 +93,44 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
 {
   switch (std::rand() % 2)
   {
-    case 0:
+    case 0: //Random on window
+    {
+      const QPointF local_pos{
+        m_qtconceptmap->mapToScene(
+          m_qtconceptmap->cursor().pos().x()
+            - m_qtconceptmap->geometry().left()
+            + 2
+            - 1 + (std::rand() % 3),
+          m_qtconceptmap->cursor().pos().y()
+            - m_qtconceptmap->geometry().top()
+            + 27
+            - 1 + (std::rand() % 3)
+        )
+      };
+      return local_pos;
+    }
+    case 1: //On ToolIcon
+    {
+      return {};
+      if (m_qtconceptmap->GetQtToolItem().isVisible())
+      {
+        return QPointF(
+          m_qtconceptmap->GetQtToolItem().pos().x() + 12.0,
+          m_qtconceptmap->GetQtToolItem().pos().y() + 36.0
+        );
+      }
+      return QPointF();
+    }
+    case 2: //Random on window
+    {
+      const int x = (m_qtconceptmap->width() / 4) + (std::rand() % (m_qtconceptmap->width() / 2));
+      const int y = (m_qtconceptmap->height() / 4) + (std::rand() % (m_qtconceptmap->height() / 2));
+      const QPointF local_pos{
+        m_qtconceptmap->mapToScene(x, y)
+      };
+      return local_pos;
+    }
+    case 3: //Random on scene
     {
       const QPointF local_pos{
         m_qtconceptmap->sceneRect().topLeft()
@@ -104,13 +141,7 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
       };
       return local_pos;
     }
-    case 1: return
-      QPointF(
-        m_qtconceptmap->GetQtToolItem().pos().x() + 12.0,
-        m_qtconceptmap->GetQtToolItem().pos().y() + 36.0
-      );
   }
-  assert(!"Should not get here"); //!OCLINT
   return QPointF();
 }
 
