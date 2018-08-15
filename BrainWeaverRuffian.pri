@@ -1,7 +1,5 @@
 HEADERS  += \
-    $$PWD/qtbrainweaverruffianqtconceptmap_test.h \
-    $$PWD/ruffian.cpp
+    $$PWD/qtbrainweaverruffianqtconceptmap_test.h
 
 SOURCES += \
-    $$PWD/qtbrainweaverruffianqtconceptmap_test.cpp \
-    $$PWD/ruffian.h
+    $$PWD/qtbrainweaverruffianqtconceptmap_test.cpp

@@ -2,7 +2,6 @@
 #define RIBI_BRAR_QTCONCEPTMAP_TEST_H
 
 #include "qtconceptmap.h"
-//#include <QtTest/QtTest>
 #include <QDialog>
 
 namespace ribi {
@@ -16,6 +15,14 @@ public:
 
   QtConceptMapTest();
   ribi::cmap::QtConceptMap * const m_qtconceptmap;
+
+  QPointF GetRandomLocalPos() noexcept;
+  Qt::Key GetRandomKey() noexcept;
+  int GetRandomX() noexcept;
+  int GetRandomY() noexcept;
+  Qt::KeyboardModifier GetRandomKeyboardModifier() noexcept;
+  Qt::KeyboardModifiers GetRandomKeyboardModifiers() noexcept;
+  Qt::MouseButton GetRandomMouseButton() noexcept;
 
 private slots:
 
