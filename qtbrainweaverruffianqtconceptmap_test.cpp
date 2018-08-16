@@ -279,10 +279,12 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
   qDebug() << m_ticks;
-  //const int event_type{std::rand() % 5};
-  //if (event_type == 0)
+  assert(m_ticks != 38);
+  //Only keyboard
   {
     QKeyEvent event = GetRandomKeyEvent();
+
+    qDebug() << event.type() << QKeySequence(event.key()).toString() << event.modifiers();
     m_qtconceptmap->keyPressEvent(&event);
     return;
   }
