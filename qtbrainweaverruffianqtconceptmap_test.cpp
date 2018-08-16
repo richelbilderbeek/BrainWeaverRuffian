@@ -22,7 +22,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest()
   m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->show();
 
-  startTimer(10);
+  startTimer(20);
 }
 
 Qt::Key ribi::brar::QtConceptMapTest::GetRandomKey() noexcept
@@ -237,6 +237,39 @@ int ribi::brar::QtConceptMapTest::GetRandomY() noexcept
 
 QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 {
+  switch (std::rand() % 30)
+  {
+    //case  0: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_N, Qt::ControlModifier);
+    case  1: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_E, Qt::ControlModifier);
+    //case  2: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Delete, Qt::NoModifier);
+    case  3: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Space, Qt::NoModifier);
+    case  4: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::NoModifier);
+    case  5: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::NoModifier);
+    case  6: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::NoModifier);
+    case  7: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::NoModifier);
+    case  8: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ControlModifier);
+    case  9: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ControlModifier);
+    case 10: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ControlModifier);
+    case 11: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ControlModifier);
+    case 12: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ShiftModifier);
+    case 13: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ShiftModifier);
+    case 14: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ShiftModifier);
+    case 15: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ShiftModifier);
+    case 16: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::AltModifier);
+    case 17: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::AltModifier);
+    case 18: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::AltModifier);
+    case 19: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::AltModifier);
+    case 20: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ControlModifier | Qt::ShiftModifier);
+    case 21: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ControlModifier | Qt::ShiftModifier);
+    case 22: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ControlModifier | Qt::ShiftModifier);
+    case 23: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ControlModifier | Qt::ShiftModifier);
+    case 24: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::AltModifier | Qt::ShiftModifier);
+    case 25: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::AltModifier | Qt::ShiftModifier);
+    case 26: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::AltModifier | Qt::ShiftModifier);
+    case 27: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::AltModifier | Qt::ShiftModifier);
+    default: break;
+  }
+  //
   const Qt::Key key = GetRandomKey();
   Qt::KeyboardModifier modifier = GetRandomKeyboardModifier();
   return QKeyEvent(QEvent::Type::KeyPress, key, modifier);
@@ -245,9 +278,9 @@ QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
-  //qDebug() << m_ticks;
-  const int event_type{std::rand() % 5};
-  if (event_type == 0)
+  qDebug() << m_ticks;
+  //const int event_type{std::rand() % 5};
+  //if (event_type == 0)
   {
     QKeyEvent event = GetRandomKeyEvent();
     m_qtconceptmap->keyPressEvent(&event);
