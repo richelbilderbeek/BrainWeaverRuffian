@@ -22,7 +22,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest()
   m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->show();
 
-  startTimer(20);
+  startTimer(200);
 }
 
 Qt::Key ribi::brar::QtConceptMapTest::GetRandomKey() noexcept
@@ -86,14 +86,14 @@ Qt::KeyboardModifiers ribi::brar::QtConceptMapTest::GetRandomKeyboardModifiers()
 {
   const std::vector<Qt::KeyboardModifiers> modifiers =
   {
-    Qt::NoModifier,
-    Qt::ShiftModifier,
-    Qt::ControlModifier,
-    Qt::AltModifier,
-    Qt::ShiftModifier | Qt::ControlModifier,
-    Qt::ControlModifier | Qt::AltModifier,
-    Qt::AltModifier | Qt::ShiftModifier,
-    Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
+    Qt::NoModifier
+    //Qt::ShiftModifier,
+    //Qt::ControlModifier,
+    //Qt::AltModifier,
+    //Qt::ShiftModifier | Qt::ControlModifier,
+    //Qt::ControlModifier | Qt::AltModifier,
+    //Qt::AltModifier | Qt::ShiftModifier,
+    //Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
   };
   return modifiers[ std::rand() % modifiers.size() ];
 }
@@ -123,7 +123,7 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
       const auto items = m_qtconceptmap->GetScene().selectedItems();
       const int n_items = items.size();
       if (n_items == 0) {
-        return QPointF();
+        return GetRandomLocalPos();
       }
       const auto item = items[ std::rand() % n_items ];
       if (qgraphicsitem_cast<ribi::cmap::QtNode*>(item)
@@ -207,12 +207,11 @@ QMouseEvent ribi::brar::QtConceptMapTest::GetRandomMouseEvent() noexcept
 
 QEvent::Type ribi::brar::QtConceptMapTest::GetRandomMouseEventType() noexcept
 {
-  switch (std::rand() % 4)
+  switch (std::rand() % 3)
   {
     case 0: return QEvent::Type::MouseButtonDblClick;
-    case 1: return QEvent::Type::MouseButtonPress;
-    case 2: return QEvent::Type::MouseButtonRelease;
-    case 3: return QEvent::Type::MouseMove;
+    case 1: return QEvent::Type::MouseButtonPress; //Will also trigger a release
+    case 2: return QEvent::Type::MouseMove;
   }
   assert(!"Should not get here");
   return QEvent::Type::MouseButtonPress;
@@ -277,13 +276,21 @@ QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
+  const bool use_keyboard{false};
+  const bool use_mouse_doubleclick{false};
+  const bool use_mouse_move{false};
+  const bool use_mouse_click{true};
+  const bool use_mouse{
+    use_mouse_doubleclick || use_mouse_move || use_mouse_click
+  };
+
   ++m_ticks;
   if (m_ticks == 1000)
   {
     qDebug() << "Clean exit";
     std::exit(0);
   }
-  //Only keyboard
+  if (use_keyboard)
   {
     QKeyEvent event = GetRandomKeyEvent();
 
@@ -291,25 +298,37 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     m_qtconceptmap->keyPressEvent(&event);
     return;
   }
+  if (!use_mouse) return;
   QMouseEvent event = GetRandomMouseEvent();
   const QPoint mousePos = (m_qtconceptmap->pos()
-    + m_qtconceptmap->mapFromScene(event.localPos())) + QPoint(0, 27)
+    + m_qtconceptmap->mapFromScene(event.localPos()))
+    // + QPoint(0, 27) //Window title, use if not full-screen
   ;
   m_qtconceptmap->cursor().setPos(mousePos);
-  if (event.type() == QEvent::Type::MouseButtonDblClick)
-  {
+  if (use_mouse_doubleclick
+    &&event.type() == QEvent::Type::MouseButtonDblClick
+  ) {
     m_qtconceptmap->mouseDoubleClickEvent(&event);
   }
-  if (event.type() == QEvent::Type::MouseMove)
-  {
+  if (use_mouse_move
+    && event.type() == QEvent::Type::MouseMove
+  ) {
     m_qtconceptmap->mouseMoveEvent(&event);
   }
-  else if (event.type() == QEvent::Type::MouseButtonPress)
+  else if (
+    use_mouse_click
+    && event.type() == QEvent::Type::MouseButtonPress)
   {
     m_qtconceptmap->mousePressEvent(&event);
-  }
-  else if (event.type() == QEvent::Type::MouseButtonRelease)
-  {
+    qApp->processEvents();
+    event = QMouseEvent(
+      QEvent::Type::MouseButtonRelease,
+      event.localPos(),
+      event.button(),
+      event.buttons(),
+      event.modifiers()
+    );
     m_qtconceptmap->mouseReleaseEvent(&event);
+    qApp->processEvents();
   }
 }
