@@ -5,7 +5,7 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QDesktopWidget>
-
+#include <QThread>
 #include "qtconceptmapqtedge.h"
 #include "qtconceptmapqtnode.h"
 #include "qtconceptmapconcepteditdialog.h"
@@ -278,8 +278,10 @@ QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
-  if (m_ticks == 1000)
+  if (m_ticks == 875)
   {
+    qDebug() << "Closing ...";
+    QThread::sleep(10);
     qDebug() << "Clean exit";
     std::exit(0);
   }

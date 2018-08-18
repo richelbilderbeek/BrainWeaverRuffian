@@ -10,6 +10,7 @@
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
+  std::srand(0);
   ribi::brar::QtConceptMapTest t;
 
   //Center the QtConceptMap
