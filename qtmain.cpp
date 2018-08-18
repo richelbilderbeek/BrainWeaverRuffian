@@ -1,11 +1,6 @@
-#include <cassert>
-#include <iostream>
+#include <QApplication>
 
 #include "qtbrainweaverruffianqtconceptmap_test.h"
-#include "conceptmapfactory.h"
-#include <qtconceptmap.h>
-#include <QDesktopWidget>
-#include <QtTest/QtTest>
 
 int main(int argc, char *argv[])
 {
