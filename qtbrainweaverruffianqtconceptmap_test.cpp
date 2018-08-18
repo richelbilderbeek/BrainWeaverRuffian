@@ -278,13 +278,16 @@ QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
-  qDebug() << m_ticks;
-  assert(m_ticks != 38);
+  if (m_ticks == 43)
+  {
+    qDebug() << "Clean exit";
+    std::exit(0);
+  }
   //Only keyboard
   {
     QKeyEvent event = GetRandomKeyEvent();
 
-    qDebug() << event.type() << QKeySequence(event.key()).toString() << event.modifiers();
+    qDebug() << m_ticks << event.type() << QKeySequence(event.key()).toString() << event.modifiers();
     m_qtconceptmap->keyPressEvent(&event);
     return;
   }
