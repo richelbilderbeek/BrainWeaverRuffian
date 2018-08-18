@@ -1,5 +1,7 @@
 #include "qtbrainweaverruffianqtconceptmap_test.h"
 
+#include <iostream>
+
 #include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
@@ -278,8 +280,12 @@ QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
-  if (m_ticks == 875)
+
+  ribi::cmap::CheckInvariants(*m_qtconceptmap);
+
+  if (m_ticks == 900)
   {
+    std::clog << *m_qtconceptmap;
     qDebug() << "Closing ...";
     QThread::sleep(10);
     qDebug() << "Clean exit";
