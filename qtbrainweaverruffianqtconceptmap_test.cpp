@@ -278,7 +278,7 @@ QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
   ++m_ticks;
-  if (m_ticks == 43)
+  if (m_ticks == 1000)
   {
     qDebug() << "Clean exit";
     std::exit(0);
