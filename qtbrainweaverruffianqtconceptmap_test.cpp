@@ -287,7 +287,11 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   {
     std::clog << *m_qtconceptmap;
     qDebug() << "Closing ...";
-    QThread::sleep(10);
+    for (int i = 0; i != 10000; ++i)
+    {
+      QThread::msleep(1);
+      qApp->processEvents();
+    }
     qDebug() << "Clean exit";
     std::exit(0);
   }
