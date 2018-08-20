@@ -48,7 +48,7 @@ Qt::KeyboardModifiers ribi::brar::QtConceptMapTest::GetRandomKeyboardModifiers()
 
 QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
 {
-  switch (0 + (std::rand() % 3))
+  switch (0 + (std::rand() % 4))
   {
     case 0: //On item
     {
@@ -224,11 +224,12 @@ void ribi::brar::QtConceptMapTest::PutCursorThere(const QMouseEvent& event) noex
 
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
-  const bool use_keyboard{false};
+  const bool use_keyboard{true};
   const bool use_mouse{true};
 
   ++m_ticks;
-  if (use_keyboard)
+
+  if ((std::rand() >> 4) % 2 && use_keyboard)
   {
     QKeyEvent event = GetRandomKeyEvent();
 

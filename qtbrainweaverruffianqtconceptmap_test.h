@@ -50,22 +50,22 @@ private:
   ///Allowed modifiers
   const std::vector<Qt::KeyboardModifier> m_keyboard_modifiers
   {
-    Qt::NoModifier
-    //Qt::ShiftModifier,
-    //Qt::ControlModifier,
-    //Qt::AltModifier
+    Qt::NoModifier,
+    Qt::ShiftModifier,
+    Qt::ControlModifier,
+    Qt::AltModifier
   };
 
   ///Allowed modifierses (Gollumese plural)
   const std::vector<Qt::KeyboardModifiers> m_keyboard_modifierses{
     Qt::NoModifier,
-    //Qt::ShiftModifier,
-    Qt::ControlModifier
-    //Qt::AltModifier,
-    //Qt::ShiftModifier | Qt::ControlModifier,
-    //Qt::ControlModifier | Qt::AltModifier,
-    //Qt::AltModifier | Qt::ShiftModifier,
-    //Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
+    Qt::ShiftModifier,
+    Qt::ControlModifier,
+    Qt::AltModifier,
+    Qt::ShiftModifier | Qt::ControlModifier,
+    Qt::ControlModifier | Qt::AltModifier,
+    Qt::AltModifier | Qt::ShiftModifier,
+    Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
   };
 
   const std::vector<Qt::Key> m_keys{
@@ -108,8 +108,8 @@ private:
   };
 
   const std::vector<Qt::MouseButton> m_mouse_buttons{
-    Qt::LeftButton
-    //Qt::RightButton
+    Qt::LeftButton,
+    Qt::RightButton
   };
 
   int m_ticks;
