@@ -34,15 +34,9 @@ Qt::Key ribi::brar::QtConceptMapTest::GetRandomKey() noexcept
   return m_keys[ std::rand() % m_keys.size() ];
 }
 
-Qt::KeyboardModifier ribi::brar::QtConceptMapTest
-  ::GetRandomKeyboardModifier() noexcept
-{
-  return m_keyboard_modifiers[ std::rand() % m_keyboard_modifiers.size() ];
-}
-
 Qt::KeyboardModifiers ribi::brar::QtConceptMapTest::GetRandomKeyboardModifiers() noexcept
 {
-  return m_keyboard_modifierses[ std::rand() % m_keyboard_modifierses.size() ];
+  return m_keyboard_modifiers[ std::rand() % m_keyboard_modifiers.size() ];
 }
 
 
@@ -138,88 +132,9 @@ Qt::MouseButton ribi::brar::QtConceptMapTest::GetRandomMouseButton() noexcept
   return m_mouse_buttons[ std::rand() % m_mouse_buttons.size() ];
 }
 
-QMouseEvent ribi::brar::QtConceptMapTest::GetRandomMouseEvent() noexcept
-{
-  const QEvent::Type type = GetRandomMouseEventType();
-  const QPointF localPos(GetRandomLocalPos());
-  const Qt::MouseButton button{
-    type == QEvent::MouseMove ? Qt::NoButton : GetRandomMouseButton()
-  };
-  const Qt::MouseButtons buttons = Qt::NoButton;
-  //const Qt::MouseButtons buttons = button;
-  const Qt::KeyboardModifiers modifiers = GetRandomKeyboardModifiers();
-  return QMouseEvent(type, localPos, button, buttons, modifiers);
-}
-
 QEvent::Type ribi::brar::QtConceptMapTest::GetRandomMouseEventType() noexcept
 {
   return m_mouse_event_types[ std::rand() % m_mouse_event_types.size() ];
-}
-
-int ribi::brar::QtConceptMapTest::GetRandomX() noexcept
-{
-  return m_qtconceptmap->geometry().left()
-    + (std::rand() % m_qtconceptmap->width());
-}
-
-int ribi::brar::QtConceptMapTest::GetRandomY() noexcept
-{
-  const int y{
-    m_qtconceptmap->geometry().top()
-    + 64 // Window title
-    + (std::rand() % (m_qtconceptmap->geometry().height() - 64))
-  };
-  assert(y > 0);
-  return y;
-}
-
-QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
-{
-  switch (std::rand() % 30)
-  {
-    //case  0: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_N, Qt::ControlModifier);
-    case  1: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_E, Qt::ControlModifier);
-    //case  2: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Delete, Qt::NoModifier);
-    case  3: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Space, Qt::NoModifier);
-    case  4: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::NoModifier);
-    case  5: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::NoModifier);
-    case  6: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::NoModifier);
-    case  7: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::NoModifier);
-    case  8: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ControlModifier);
-    case  9: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ControlModifier);
-    case 10: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ControlModifier);
-    case 11: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ControlModifier);
-    case 12: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ShiftModifier);
-    case 13: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ShiftModifier);
-    case 14: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ShiftModifier);
-    case 15: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ShiftModifier);
-    case 16: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::AltModifier);
-    case 17: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::AltModifier);
-    case 18: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::AltModifier);
-    case 19: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::AltModifier);
-    case 20: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ControlModifier | Qt::ShiftModifier);
-    case 21: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ControlModifier | Qt::ShiftModifier);
-    case 22: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ControlModifier | Qt::ShiftModifier);
-    case 23: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ControlModifier | Qt::ShiftModifier);
-    case 24: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::AltModifier | Qt::ShiftModifier);
-    case 25: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::AltModifier | Qt::ShiftModifier);
-    case 26: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::AltModifier | Qt::ShiftModifier);
-    case 27: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::AltModifier | Qt::ShiftModifier);
-    default: break;
-  }
-  //
-  const Qt::Key key = GetRandomKey();
-  Qt::KeyboardModifier modifier = GetRandomKeyboardModifier();
-  return QKeyEvent(QEvent::Type::KeyPress, key, modifier);
-}
-
-void ribi::brar::QtConceptMapTest::PutCursorThere(const QMouseEvent& event) noexcept
-{
-  const QPoint mousePos = (m_qtconceptmap->pos()
-    + m_qtconceptmap->mapFromScene(event.localPos()))
-    + QPoint(0, m_qtconceptmap->isFullScreen() ? 0 : 27) //Window title, use if not full-screen
-  ;
-  m_qtconceptmap->cursor().setPos(mousePos);
 }
 
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
@@ -229,18 +144,18 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 
   ++m_ticks;
 
+  const auto keyboard_modifiers = GetRandomKeyboardModifiers();
+
   if ((std::rand() >> 4) % 2 && use_keyboard)
   {
-    QKeyEvent event = GetRandomKeyEvent();
-
-    qDebug() << m_ticks << event.type() << QKeySequence(event.key()).toString() << event.modifiers();
-    m_qtconceptmap->keyPressEvent(&event);
+    const auto key = GetRandomKey();
+    qDebug() << m_ticks << QEvent::KeyPress << QKeySequence(key).toString() << keyboard_modifiers;
+    QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
   }
   if (!use_mouse) return;
   const auto event_type = GetRandomMouseEventType();
   const auto mouse_button = GetRandomMouseButton();
-  const auto keyboard_modifiers = GetRandomKeyboardModifiers();
   const QPoint global_pos = GetRandomGlobalPos();
   qDebug() << m_ticks << event_type << global_pos << mouse_button << keyboard_modifiers;
   if (event_type == QEvent::Type::MouseButtonDblClick

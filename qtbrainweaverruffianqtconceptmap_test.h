@@ -19,17 +19,11 @@ public:
 
   QPoint GetRandomGlobalPos() noexcept;
   Qt::Key GetRandomKey() noexcept;
-  QKeyEvent GetRandomKeyEvent() noexcept;
   QPointF GetRandomLocalPos() noexcept;
-  int GetRandomX() noexcept;
-  int GetRandomY() noexcept;
-  Qt::KeyboardModifier GetRandomKeyboardModifier() noexcept;
+
   Qt::KeyboardModifiers GetRandomKeyboardModifiers() noexcept;
   Qt::MouseButton GetRandomMouseButton() noexcept;
-  QMouseEvent GetRandomMouseEvent() noexcept;
   QEvent::Type GetRandomMouseEventType() noexcept;
-
-  void PutCursorThere(const QMouseEvent& event) noexcept;
 
 private slots:
 
@@ -47,17 +41,8 @@ private:
     QEvent::Type::MouseButtonDblClick
   };
 
-  ///Allowed modifiers
-  const std::vector<Qt::KeyboardModifier> m_keyboard_modifiers
-  {
-    Qt::NoModifier,
-    Qt::ShiftModifier,
-    Qt::ControlModifier,
-    Qt::AltModifier
-  };
-
-  ///Allowed modifierses (Gollumese plural)
-  const std::vector<Qt::KeyboardModifiers> m_keyboard_modifierses{
+  ///Allowed combinations of keyboard modifiers
+  const std::vector<Qt::KeyboardModifiers> m_keyboard_modifiers{
     Qt::NoModifier,
     Qt::ShiftModifier,
     Qt::ControlModifier,
@@ -76,7 +61,7 @@ private:
     //Qt::Key_F8,
     Qt::Key_1,
     Qt::Key_2,
-    //Qt::Key_A,
+    Qt::Key_A,
     //Qt::Key_B,
     //Qt::Key_C,
     //Qt::Key_D,
