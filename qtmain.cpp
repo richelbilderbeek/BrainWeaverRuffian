@@ -1,5 +1,6 @@
 #include <QApplication>
 
+#include <ctime>
 #include <iostream>
 
 #include "conceptmaphelper.h"
