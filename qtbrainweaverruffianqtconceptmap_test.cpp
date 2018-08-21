@@ -146,7 +146,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   ++m_ticks;
   if (!ribi::cmap::OnTravis())
   {
-    if (m_ticks == 560)
+    if (m_ticks == 100560)
     {
       qCritical() << *this << '\n';
       while (1)
@@ -162,7 +162,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   if ((std::rand() >> 4) % 2 && m_use_keyboard)
   {
     const auto key = GetRandomKey();
-    qCritical() << m_ticks << QEvent::KeyPress << QKeySequence(key).toString() << keyboard_modifiers;
+    qCritical() << m_ticks << "KeyPress" << QKeySequence(keyboard_modifiers + key).toString();
     QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
   }

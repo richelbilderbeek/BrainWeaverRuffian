@@ -65,10 +65,13 @@ private:
     Qt::Key_Delete,
     Qt::Key_Down,
     Qt::Key_E,
+    Qt::Key_E,
+    Qt::Key_E,
     //Qt::Key_Equal, //Scale
     Qt::Key_H,
     Qt::Key_Left,
     //Qt::Key_Minus, //Scale
+    Qt::Key_N,
     Qt::Key_N,
     Qt::Key_Right,
     Qt::Key_Space,
