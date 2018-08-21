@@ -171,8 +171,8 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   const auto mouse_button = GetRandomMouseButton();
   const QPoint global_pos = GetRandomGlobalPos();
   qCritical() << m_ticks << event_type << global_pos << mouse_button << keyboard_modifiers;
-  if (event_type == QEvent::Type::MouseButtonDblClick
-  ) {
+  if (event_type == QEvent::Type::MouseButtonDblClick)
+  {
     QTest::mouseMove(m_qtconceptmap, global_pos);
     QTest::mouseDClick(
       m_qtconceptmap->viewport(),
@@ -181,8 +181,8 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
       global_pos
     );
   }
-  if (event_type == QEvent::Type::MouseMove
-  ) {
+  if (event_type == QEvent::Type::MouseMove)
+  {
     QTest::mouseMove(m_qtconceptmap, global_pos);
   }
   else if (event_type == QEvent::Type::MouseButtonPress)

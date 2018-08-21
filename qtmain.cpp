@@ -20,7 +20,10 @@ int main(int argc, char *argv[])
   qCritical() << "RNG seed: " << seed;
   std::srand(seed);
 
+
+
   ribi::brar::QtConceptMapTest t;
   t.m_qtconceptmap->show();
+  t.m_qtconceptmap->setGeometry(32, 32, 1200, 600);
   return a.exec();
 }
