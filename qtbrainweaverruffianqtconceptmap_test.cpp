@@ -146,7 +146,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   ++m_ticks;
   if (!ribi::cmap::OnTravis())
   {
-    if (m_ticks == 100560)
+    if (m_ticks == 100302)
     {
       qCritical() << *this << '\n';
       while (1)
