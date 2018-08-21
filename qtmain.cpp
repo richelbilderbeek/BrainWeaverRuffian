@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
   {
     seed = std::time(0);
   }
+  seed = 1534858203; // after 71: QtQuadBezierArrowItem must have a parent
   qCritical() << "RNG seed: " << seed;
   std::srand(seed);
 
