@@ -62,38 +62,18 @@ private:
     Qt::Key_1,
     Qt::Key_2,
     Qt::Key_A,
-    //Qt::Key_B,
-    //Qt::Key_C,
-    //Qt::Key_D,
     Qt::Key_Delete,
     Qt::Key_Down,
     Qt::Key_E,
-    Qt::Key_Equal,
-    //Qt::Key_F,
-    //Qt::Key_G,
+    //Qt::Key_Equal, //Scale
     Qt::Key_H,
-    //Qt::Key_I,
-    //Qt::Key_J,
-    //Qt::Key_K,
-    //Qt::Key_L,
     Qt::Key_Left,
-    //Qt::Key_M,
-    Qt::Key_Minus,
+    //Qt::Key_Minus, //Scale
     Qt::Key_N,
-    //Qt::Key_O,
-    //Qt::Key_P,
-    //Qt::Key_Q,
-    //Qt::Key_R,
     Qt::Key_Right,
-    //Qt::Key_S,
     Qt::Key_Space,
     Qt::Key_T,
-    //Qt::Key_U,
-    //Qt::Key_V,
     Qt::Key_Up,
-    //Qt::Key_W,
-    //Qt::Key_X,
-    //Qt::Key_Y,
     Qt::Key_Z
   };
 
@@ -102,9 +82,16 @@ private:
     Qt::RightButton
   };
 
-  int m_ticks;
+  int m_ticks{0};
 
+  const bool m_use_keyboard{true};
+  const bool m_use_mouse{false};
+
+  friend std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 };
+
+std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
+QDebug operator<<(QDebug d, const QtConceptMapTest& t) noexcept;
 
 } //~namespace brar
 } //~namespace ribi

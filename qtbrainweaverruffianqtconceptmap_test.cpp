@@ -1,5 +1,8 @@
 #include "qtbrainweaverruffianqtconceptmap_test.h"
 
+#include <iostream>
+#include <sstream>
+
 #include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
@@ -10,11 +13,11 @@
 #include "qtconceptmapqtnode.h"
 #include "qtconceptmapconcepteditdialog.h"
 #include "conceptmapfactory.h"
+#include "conceptmaphelper.h"
 #include "qtconceptmaptoolsitem.h"
 
 ribi::brar::QtConceptMapTest::QtConceptMapTest()
-  : m_qtconceptmap{new ribi::cmap::QtConceptMap},
-    m_ticks{0}
+  : m_qtconceptmap{new ribi::cmap::QtConceptMap}
 {
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
@@ -139,25 +142,35 @@ QEvent::Type ribi::brar::QtConceptMapTest::GetRandomMouseEventType() noexcept
 
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
-  const bool use_keyboard{true};
-  const bool use_mouse{true};
 
   ++m_ticks;
-
+  if (!ribi::cmap::OnTravis())
+  {
+    if (m_ticks == 560)
+    {
+      qCritical() << *this << '\n';
+      while (1)
+      {
+        qApp->processEvents();
+      }
+      qCritical() << "Clean exit";
+      std::exit(0);
+    }
+  }
   const auto keyboard_modifiers = GetRandomKeyboardModifiers();
 
-  if ((std::rand() >> 4) % 2 && use_keyboard)
+  if ((std::rand() >> 4) % 2 && m_use_keyboard)
   {
     const auto key = GetRandomKey();
-    qDebug() << m_ticks << QEvent::KeyPress << QKeySequence(key).toString() << keyboard_modifiers;
+    qCritical() << m_ticks << QEvent::KeyPress << QKeySequence(key).toString() << keyboard_modifiers;
     QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
   }
-  if (!use_mouse) return;
+  if (!m_use_mouse) return;
   const auto event_type = GetRandomMouseEventType();
   const auto mouse_button = GetRandomMouseButton();
   const QPoint global_pos = GetRandomGlobalPos();
-  qDebug() << m_ticks << event_type << global_pos << mouse_button << keyboard_modifiers;
+  qCritical() << m_ticks << event_type << global_pos << mouse_button << keyboard_modifiers;
   if (event_type == QEvent::Type::MouseButtonDblClick
   ) {
     QTest::mouseMove(m_qtconceptmap, global_pos);
@@ -192,4 +205,20 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
       global_pos
     );
   }
+}
+
+std::ostream& ribi::brar::operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept
+{
+  os
+    << "#ticks: " << t.m_ticks << '\n'
+    << "QtConceptMap:\n" << *t.m_qtconceptmap;
+  return os;
+}
+
+QDebug ribi::brar::operator<<(QDebug d, const QtConceptMapTest& t) noexcept
+{
+  std::stringstream s;
+  s << t;
+  d << s.str().c_str();
+  return d;
 }
