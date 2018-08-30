@@ -1,108 +1,58 @@
 #include "qtbrainweaverruffianqtconceptmap_test.h"
 
 #include <iostream>
+<<<<<<< HEAD
+=======
+#include <sstream>
+>>>>>>> richel
 
 #include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QDesktopWidget>
+<<<<<<< HEAD
 #include <QThread>
+=======
+#include <QTest>
+>>>>>>> richel
 #include "qtconceptmapqtedge.h"
 #include "qtconceptmapqtnode.h"
 #include "qtconceptmapconcepteditdialog.h"
 #include "conceptmapfactory.h"
+#include "conceptmaphelper.h"
 #include "qtconceptmaptoolsitem.h"
 
 ribi::brar::QtConceptMapTest::QtConceptMapTest()
-  : m_qtconceptmap{new ribi::cmap::QtConceptMap},
-    m_ticks{0}
+  : m_qtconceptmap{new ribi::cmap::QtConceptMap}
 {
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
   );
   m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->show();
+  startTimer(10);
+}
 
-  startTimer(20);
+QPoint ribi::brar::QtConceptMapTest::GetRandomGlobalPos() noexcept
+{
+  return m_qtconceptmap->mapFromScene(GetRandomLocalPos());
 }
 
 Qt::Key ribi::brar::QtConceptMapTest::GetRandomKey() noexcept
 {
-  const std::vector<Qt::Key> key =
-  {
-    //Qt::Key_F1,
-    //Qt::Key_F2,
-    Qt::Key_Space,
-    Qt::Key_Left,
-    Qt::Key_Right,
-    Qt::Key_Up,
-    Qt::Key_Down,
-    Qt::Key_Delete,
-    Qt::Key_1,
-    Qt::Key_2,
-    //Qt::Key_A,
-    //Qt::Key_B,
-    //Qt::Key_C,
-    //Qt::Key_D,
-    Qt::Key_E,
-    //Qt::Key_F,
-    //Qt::Key_G,
-    Qt::Key_H,
-    //Qt::Key_I,
-    //Qt::Key_J,
-    //Qt::Key_K,
-    //Qt::Key_L,
-    //Qt::Key_M,
-    Qt::Key_N,
-    //Qt::Key_O,
-    //Qt::Key_P,
-    //Qt::Key_Q,
-    //Qt::Key_R,
-    //Qt::Key_S,
-    Qt::Key_T
-    //Qt::Key_U,
-    //Qt::Key_V,
-    //Qt::Key_W,
-    //Qt::Key_X,
-    //Qt::Key_Y,
-    //Qt::Key_Z
-  };
-  return key[ std::rand() % key.size() ];
-}
-
-Qt::KeyboardModifier ribi::brar::QtConceptMapTest
-  ::GetRandomKeyboardModifier() noexcept
-{
-  const std::vector<Qt::KeyboardModifier> modifiers =
-  {
-    Qt::NoModifier,
-    Qt::ShiftModifier,
-    Qt::ControlModifier,
-    Qt::AltModifier
-  };
-  return modifiers[ std::rand() % modifiers.size() ];
+  return m_keys[ std::rand() % m_keys.size() ];
 }
 
 Qt::KeyboardModifiers ribi::brar::QtConceptMapTest::GetRandomKeyboardModifiers() noexcept
 {
-  const std::vector<Qt::KeyboardModifiers> modifiers =
-  {
-    Qt::NoModifier,
-    Qt::ShiftModifier,
-    Qt::ControlModifier,
-    Qt::AltModifier,
-    Qt::ShiftModifier | Qt::ControlModifier,
-    Qt::ControlModifier | Qt::AltModifier,
-    Qt::AltModifier | Qt::ShiftModifier,
-    Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
-  };
-  return modifiers[ std::rand() % modifiers.size() ];
+  return m_keyboard_modifiers[ std::rand() % m_keyboard_modifiers.size() ];
 }
+
 
 QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
 {
-  switch (0 + (std::rand() % 3))
+  switch (0 + (std::rand() % 4))
   {
     case 0: //On item
     {
@@ -125,7 +75,7 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
       const auto items = m_qtconceptmap->GetScene().selectedItems();
       const int n_items = items.size();
       if (n_items == 0) {
-        return QPointF();
+        return GetRandomLocalPos();
       }
       const auto item = items[ std::rand() % n_items ];
       if (qgraphicsitem_cast<ribi::cmap::QtNode*>(item)
@@ -189,97 +139,19 @@ QPointF ribi::brar::QtConceptMapTest::GetRandomLocalPos() noexcept
 
 Qt::MouseButton ribi::brar::QtConceptMapTest::GetRandomMouseButton() noexcept
 {
-  const std::vector<Qt::MouseButton> buttons =
-  {
-    Qt::LeftButton,
-    Qt::RightButton
-  };
-  return buttons[ std::rand() % buttons.size() ];
-}
-
-QMouseEvent ribi::brar::QtConceptMapTest::GetRandomMouseEvent() noexcept
-{
-  const QEvent::Type type = GetRandomMouseEventType();
-  const QPointF localPos(GetRandomLocalPos());
-  const Qt::MouseButton button = GetRandomMouseButton();
-  const Qt::MouseButtons buttons = Qt::NoButton;
-  const Qt::KeyboardModifiers modifiers = GetRandomKeyboardModifiers();
-  return QMouseEvent(type, localPos, button, buttons, modifiers);
+  return m_mouse_buttons[ std::rand() % m_mouse_buttons.size() ];
 }
 
 QEvent::Type ribi::brar::QtConceptMapTest::GetRandomMouseEventType() noexcept
 {
-  switch (std::rand() % 4)
-  {
-    case 0: return QEvent::Type::MouseButtonDblClick;
-    case 1: return QEvent::Type::MouseButtonPress;
-    case 2: return QEvent::Type::MouseButtonRelease;
-    case 3: return QEvent::Type::MouseMove;
-  }
-  assert(!"Should not get here");
-  return QEvent::Type::MouseButtonPress;
-}
-
-int ribi::brar::QtConceptMapTest::GetRandomX() noexcept
-{
-  return m_qtconceptmap->geometry().left()
-    + (std::rand() % m_qtconceptmap->width());
-}
-
-int ribi::brar::QtConceptMapTest::GetRandomY() noexcept
-{
-  const int y{
-    m_qtconceptmap->geometry().top()
-    + 64 // Window title
-    + (std::rand() % (m_qtconceptmap->geometry().height() - 64))
-  };
-  assert(y > 0);
-  return y;
-}
-
-QKeyEvent ribi::brar::QtConceptMapTest::GetRandomKeyEvent() noexcept
-{
-  switch (std::rand() % 30)
-  {
-    //case  0: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_N, Qt::ControlModifier);
-    case  1: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_E, Qt::ControlModifier);
-    //case  2: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Delete, Qt::NoModifier);
-    case  3: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Space, Qt::NoModifier);
-    case  4: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::NoModifier);
-    case  5: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::NoModifier);
-    case  6: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::NoModifier);
-    case  7: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::NoModifier);
-    case  8: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ControlModifier);
-    case  9: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ControlModifier);
-    case 10: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ControlModifier);
-    case 11: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ControlModifier);
-    case 12: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ShiftModifier);
-    case 13: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ShiftModifier);
-    case 14: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ShiftModifier);
-    case 15: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ShiftModifier);
-    case 16: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::AltModifier);
-    case 17: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::AltModifier);
-    case 18: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::AltModifier);
-    case 19: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::AltModifier);
-    case 20: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::ControlModifier | Qt::ShiftModifier);
-    case 21: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::ControlModifier | Qt::ShiftModifier);
-    case 22: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::ControlModifier | Qt::ShiftModifier);
-    case 23: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::ControlModifier | Qt::ShiftModifier);
-    case 24: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Up, Qt::AltModifier | Qt::ShiftModifier);
-    case 25: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Right, Qt::AltModifier | Qt::ShiftModifier);
-    case 26: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Down, Qt::AltModifier | Qt::ShiftModifier);
-    case 27: return QKeyEvent(QEvent::Type::KeyPress, Qt::Key_Left, Qt::AltModifier | Qt::ShiftModifier);
-    default: break;
-  }
-  //
-  const Qt::Key key = GetRandomKey();
-  Qt::KeyboardModifier modifier = GetRandomKeyboardModifier();
-  return QKeyEvent(QEvent::Type::KeyPress, key, modifier);
+  return m_mouse_event_types[ std::rand() % m_mouse_event_types.size() ];
 }
 
 void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
+
   ++m_ticks;
+<<<<<<< HEAD
 
   ribi::cmap::CheckInvariants(*m_qtconceptmap);
 
@@ -294,34 +166,83 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     }
     qDebug() << "Clean exit";
     std::exit(0);
-  }
-  //Only keyboard
+=======
+  if (!ribi::cmap::OnTravis())
   {
-    QKeyEvent event = GetRandomKeyEvent();
+    if (m_ticks == 100302)
+    {
+      qCritical() << *this << '\n';
+      while (1)
+      {
+        qApp->processEvents();
+      }
+      qCritical() << "Clean exit";
+      std::exit(0);
+    }
+>>>>>>> richel
+  }
+  const auto keyboard_modifiers = GetRandomKeyboardModifiers();
 
-    qDebug() << m_ticks << event.type() << QKeySequence(event.key()).toString() << event.modifiers();
-    m_qtconceptmap->keyPressEvent(&event);
+  if ((std::rand() >> 4) % 2 && m_use_keyboard)
+  {
+    const auto key = GetRandomKey();
+    qCritical() << m_ticks << "KeyPress" << QKeySequence(keyboard_modifiers + key).toString();
+    QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
   }
-  QMouseEvent event = GetRandomMouseEvent();
-  const QPoint mousePos = (m_qtconceptmap->pos()
-    + m_qtconceptmap->mapFromScene(event.localPos())) + QPoint(0, 27)
-  ;
-  m_qtconceptmap->cursor().setPos(mousePos);
-  if (event.type() == QEvent::Type::MouseButtonDblClick)
+  if (!m_use_mouse) return;
+  const auto event_type = GetRandomMouseEventType();
+  const auto mouse_button = GetRandomMouseButton();
+  const QPoint global_pos = GetRandomGlobalPos();
+  qCritical() << m_ticks << event_type << global_pos << mouse_button << keyboard_modifiers;
+  if (event_type == QEvent::Type::MouseButtonDblClick)
   {
-    m_qtconceptmap->mouseDoubleClickEvent(&event);
+    QTest::mouseMove(m_qtconceptmap, global_pos);
+    QTest::mouseDClick(
+      m_qtconceptmap->viewport(),
+      mouse_button,
+      keyboard_modifiers,
+      global_pos
+    );
   }
-  if (event.type() == QEvent::Type::MouseMove)
+  if (event_type == QEvent::Type::MouseMove)
   {
-    m_qtconceptmap->mouseMoveEvent(&event);
+    QTest::mouseMove(m_qtconceptmap, global_pos);
   }
-  else if (event.type() == QEvent::Type::MouseButtonPress)
+  else if (event_type == QEvent::Type::MouseButtonPress)
   {
-    m_qtconceptmap->mousePressEvent(&event);
+    QTest::mouseMove(m_qtconceptmap, global_pos);
+    QTest::mousePress(
+      m_qtconceptmap->viewport(),
+      mouse_button,
+      keyboard_modifiers,
+      global_pos
+    );
   }
-  else if (event.type() == QEvent::Type::MouseButtonRelease)
+  else if (event_type == QEvent::Type::MouseButtonRelease)
   {
-    m_qtconceptmap->mouseReleaseEvent(&event);
+    QTest::mouseMove(m_qtconceptmap, global_pos);
+    QTest::mouseRelease(
+      m_qtconceptmap->viewport(),
+      mouse_button,
+      keyboard_modifiers,
+      global_pos
+    );
   }
+}
+
+std::ostream& ribi::brar::operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept
+{
+  os
+    << "#ticks: " << t.m_ticks << '\n'
+    << "QtConceptMap:\n" << *t.m_qtconceptmap;
+  return os;
+}
+
+QDebug ribi::brar::operator<<(QDebug d, const QtConceptMapTest& t) noexcept
+{
+  std::stringstream s;
+  s << t;
+  d << s.str().c_str();
+  return d;
 }

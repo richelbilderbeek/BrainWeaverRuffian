@@ -1,17 +1,38 @@
-#include <cassert>
+#include <QApplication>
+
+#include <ctime>
 #include <iostream>
 
+#include <QDebug>
+#include <QUndoView>
+
+#include "conceptmaphelper.h"
 #include "qtbrainweaverruffianqtconceptmap_test.h"
-#include "conceptmapfactory.h"
-#include <qtconceptmap.h>
-#include <QDesktopWidget>
-#include <QtTest/QtTest>
 
 int main(int argc, char *argv[])
 {
   QApplication a(argc, argv);
+<<<<<<< HEAD
   std::srand(0);
+=======
+
+  int seed = 2;
+  if (ribi::cmap::OnTravis())
+  {
+    seed = std::time(0);
+  }
+  seed = 1534858203; // after 71: QtQuadBezierArrowItem must have a parent
+  qCritical() << "RNG seed: " << seed;
+  std::srand(seed);
+
+
+
+>>>>>>> richel
   ribi::brar::QtConceptMapTest t;
-  t.m_qtconceptmap->showFullScreen();
+  t.m_qtconceptmap->show();
+  t.m_qtconceptmap->setGeometry(32, 32, 1200, 600);
+  QUndoView * const undo = new QUndoView(&t.m_qtconceptmap->GetUndo());
+  undo->show();
+  undo->setGeometry(32, 632, 1200, 200);
   return a.exec();
 }

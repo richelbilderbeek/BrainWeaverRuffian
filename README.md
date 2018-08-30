@@ -7,3 +7,5 @@ Branch|[![Travis CI logo]([pics/TravisCI.png)](https://travis-ci.org)|[![Codecov
 `richel`|[![Build Status](https://travis-ci.org/richelbilderbeek/BrainWeaverRuffian.svg?branch=richel)](https://travis-ci.org/richelbilderbeek/BrainWeaverRuffian) | [![codecov.io](https://codecov.io/github/richelbilderbeek/BrainWeaverRuffian/coverage.svg?branch=richel)](https://codecov.io/github/richelbilderbeek/BrainWeaverRuffian?branch=richel)
 
 QTest suite to test BrainWeaver by brute force.
+
+Note that the code coverage of the Ruffian is unimportant. It's goal is to be rought to BrainWeaver in any way.

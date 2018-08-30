@@ -58,7 +58,7 @@ script:
   - ./build_other_githubs
   # Build console test
   - qmake -qt=qt5 BrainWeaverRuffian.pro
-  - make -s debug
+  - travis_wait 20 make -s debug
   - ./BrainWeaverRuffian
   # cppcheck, be mild
   - cppcheck --quiet --error-exitcode=0 . 

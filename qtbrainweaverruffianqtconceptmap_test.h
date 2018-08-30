@@ -17,15 +17,12 @@ public:
   QtConceptMapTest();
   ribi::cmap::QtConceptMap * const m_qtconceptmap;
 
-  QPointF GetRandomLocalPos() noexcept;
+  QPoint GetRandomGlobalPos() noexcept;
   Qt::Key GetRandomKey() noexcept;
-  QKeyEvent GetRandomKeyEvent() noexcept;
-  int GetRandomX() noexcept;
-  int GetRandomY() noexcept;
-  Qt::KeyboardModifier GetRandomKeyboardModifier() noexcept;
+  QPointF GetRandomLocalPos() noexcept;
+
   Qt::KeyboardModifiers GetRandomKeyboardModifiers() noexcept;
   Qt::MouseButton GetRandomMouseButton() noexcept;
-  QMouseEvent GetRandomMouseEvent() noexcept;
   QEvent::Type GetRandomMouseEventType() noexcept;
 
 private slots:
@@ -37,9 +34,67 @@ private slots:
 
 private:
 
-  int m_ticks;
+  const std::vector<QEvent::Type> m_mouse_event_types{
+    QEvent::Type::MouseButtonPress,
+    QEvent::Type::MouseButtonRelease,
+    QEvent::Type::MouseMove,
+    QEvent::Type::MouseButtonDblClick
+  };
 
+  ///Allowed combinations of keyboard modifiers
+  const std::vector<Qt::KeyboardModifiers> m_keyboard_modifiers{
+    Qt::NoModifier,
+    Qt::ShiftModifier,
+    Qt::ControlModifier,
+    Qt::AltModifier,
+    Qt::ShiftModifier | Qt::ControlModifier,
+    Qt::ControlModifier | Qt::AltModifier,
+    Qt::AltModifier | Qt::ShiftModifier,
+    Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
+  };
+
+  const std::vector<Qt::Key> m_keys{
+    //Qt::Key_F1,
+    //Qt::Key_F2,
+    //Qt::Key_F4,
+    //Qt::Key_F7,
+    //Qt::Key_F8,
+    Qt::Key_1,
+    Qt::Key_2,
+    Qt::Key_A,
+    Qt::Key_Delete,
+    Qt::Key_Down,
+    Qt::Key_E,
+    Qt::Key_E,
+    Qt::Key_E,
+    //Qt::Key_Equal, //Scale
+    Qt::Key_H,
+    Qt::Key_Left,
+    //Qt::Key_Minus, //Scale
+    Qt::Key_N,
+    Qt::Key_N,
+    Qt::Key_Right,
+    Qt::Key_Space,
+    Qt::Key_T,
+    Qt::Key_Up,
+    Qt::Key_Z
+  };
+
+  const std::vector<Qt::MouseButton> m_mouse_buttons{
+    Qt::LeftButton,
+    Qt::RightButton
+  };
+
+  int m_ticks{0};
+
+  const bool m_use_keyboard{true};
+  const bool m_use_mouse{false};
+
+  friend std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 };
+
+std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
+QDebug operator<<(QDebug d, const QtConceptMapTest& t) noexcept;
 
 } //~namespace brar
 } //~namespace ribi
