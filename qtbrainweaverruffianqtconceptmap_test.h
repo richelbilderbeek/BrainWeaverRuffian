@@ -59,7 +59,7 @@ private:
   };
 
   const std::vector<Qt::Key> m_keys{
-    //Qt::Key_F1,
+    Qt::Key_F1,
     Qt::Key_F2,
     Qt::Key_F2,
     Qt::Key_F2,
@@ -73,9 +73,7 @@ private:
     Qt::Key_F2,
     Qt::Key_F2,
     Qt::Key_F2,
-    //Qt::Key_F4,
-    //Qt::Key_F7,
-    //Qt::Key_F8,
+    Qt::Key_F3,
     Qt::Key_1,
     Qt::Key_2,
     Qt::Key_A,
