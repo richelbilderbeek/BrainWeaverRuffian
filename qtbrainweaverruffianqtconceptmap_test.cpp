@@ -1,21 +1,15 @@
 #include "qtbrainweaverruffianqtconceptmap_test.h"
 
 #include <iostream>
-<<<<<<< HEAD
-=======
 #include <sstream>
->>>>>>> richel
 
 #include <QApplication>
 #include <QDebug>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QDesktopWidget>
-<<<<<<< HEAD
 #include <QThread>
-=======
 #include <QTest>
->>>>>>> richel
 #include "qtconceptmapqtedge.h"
 #include "qtconceptmapqtnode.h"
 #include "qtconceptmapconcepteditdialog.h"
@@ -151,22 +145,6 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 {
 
   ++m_ticks;
-<<<<<<< HEAD
-
-  ribi::cmap::CheckInvariants(*m_qtconceptmap);
-
-  if (m_ticks == 900)
-  {
-    std::clog << *m_qtconceptmap;
-    qDebug() << "Closing ...";
-    for (int i = 0; i != 10000; ++i)
-    {
-      QThread::msleep(1);
-      qApp->processEvents();
-    }
-    qDebug() << "Clean exit";
-    std::exit(0);
-=======
   if (!ribi::cmap::OnTravis())
   {
     if (m_ticks == 100302)
@@ -179,7 +157,6 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
       qCritical() << "Clean exit";
       std::exit(0);
     }
->>>>>>> richel
   }
   const auto keyboard_modifiers = GetRandomKeyboardModifiers();
 

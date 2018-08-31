@@ -88,7 +88,7 @@ private:
   int m_ticks{0};
 
   const bool m_use_keyboard{true};
-  const bool m_use_mouse{false};
+  const bool m_use_mouse{true};
 
   friend std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 };
