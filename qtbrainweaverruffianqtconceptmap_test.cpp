@@ -13,8 +13,10 @@
 #include <QTest>
 #include "qtconceptmapqtedge.h"
 #include "qtconceptmapqtnode.h"
+#include "qtconceptmapclassifyexamplesdialogcloser.h"
 #include "qtconceptmapeditconceptdialog.h"
 #include "qtconceptmapeditconceptdialogcloser.h"
+#include "qtconceptmaprateconceptdialogcloser.h"
 #include "conceptmapfactory.h"
 #include "conceptmaphelper.h"
 #include "qtconceptmaptoolsitem.h"
@@ -25,7 +27,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest()
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
   );
-  m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
+  m_qtconceptmap->SetMode(ribi::cmap::Mode::rate);
   m_qtconceptmap->show();
   startTimer(10);
 }
@@ -183,15 +185,35 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     const auto key = GetRandomKey();
     qCritical() << m_ticks << "KeyPress" << QKeySequence(keyboard_modifiers + key).toString();
 
-    ribi::cmap::QtEditConceptDialogCloser c;
+    ribi::cmap::QtClassifyExamplesDialogCloser classify_examples_closer;
+    ribi::cmap::QtEditConceptDialogCloser edit_concept_closer;
+    ribi::cmap::QtRateConceptDialogCloser rate_concept_closer;
     if (m_qtconceptmap->GetMode() == ribi::cmap::Mode::edit
       && key == Qt::Key_F2
       && keyboard_modifiers == Qt::NoModifier
     )
     {
       qApp->processEvents();
-      QTimer::singleShot(100, &c, SLOT(Modify()));
-      QTimer::singleShot(200, &c, SLOT(PressOk()));
+      QTimer::singleShot(200, &edit_concept_closer, SLOT(Modify()));
+      QTimer::singleShot(400, &edit_concept_closer, SLOT(PressOk()));
+    }
+    else if (m_qtconceptmap->GetMode() == ribi::cmap::Mode::rate
+      && key == Qt::Key_F1
+      && keyboard_modifiers == Qt::NoModifier
+    )
+    {
+      qApp->processEvents();
+      QTimer::singleShot(200, &rate_concept_closer, SLOT(Modify()));
+      QTimer::singleShot(400, &rate_concept_closer, SLOT(PressOk()));
+    }
+    else if (m_qtconceptmap->GetMode() == ribi::cmap::Mode::rate
+      && key == Qt::Key_F2
+      && keyboard_modifiers == Qt::NoModifier
+    )
+    {
+      qApp->processEvents();
+      QTimer::singleShot(200, &classify_examples_closer, SLOT(Modify()));
+      QTimer::singleShot(400, &classify_examples_closer, SLOT(PressOk()));
     }
     QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
