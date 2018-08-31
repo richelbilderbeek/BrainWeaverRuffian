@@ -44,7 +44,12 @@ private:
   ///Allowed combinations of keyboard modifiers
   const std::vector<Qt::KeyboardModifiers> m_keyboard_modifiers{
     Qt::NoModifier,
+    Qt::NoModifier,
+    Qt::NoModifier,
+    Qt::NoModifier,
     Qt::ShiftModifier,
+    Qt::ControlModifier,
+    Qt::ControlModifier,
     Qt::ControlModifier,
     Qt::AltModifier,
     Qt::ShiftModifier | Qt::ControlModifier,
@@ -55,7 +60,19 @@ private:
 
   const std::vector<Qt::Key> m_keys{
     //Qt::Key_F1,
-    //Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
+    Qt::Key_F2,
     //Qt::Key_F4,
     //Qt::Key_F7,
     //Qt::Key_F8,
@@ -67,11 +84,11 @@ private:
     Qt::Key_E,
     Qt::Key_E,
     Qt::Key_E,
+    Qt::Key_E,
     //Qt::Key_Equal, //Scale
     Qt::Key_H,
     Qt::Key_Left,
     //Qt::Key_Minus, //Scale
-    Qt::Key_N,
     Qt::Key_N,
     Qt::Key_Right,
     Qt::Key_Space,

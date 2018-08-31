@@ -9,10 +9,12 @@
 #include <QMouseEvent>
 #include <QDesktopWidget>
 #include <QThread>
+#include <QTimer>
 #include <QTest>
 #include "qtconceptmapqtedge.h"
 #include "qtconceptmapqtnode.h"
-#include "qtconceptmapconcepteditdialog.h"
+#include "qtconceptmapeditconceptdialog.h"
+#include "qtconceptmapeditconceptdialogcloser.h"
 #include "conceptmapfactory.h"
 #include "conceptmaphelper.h"
 #include "qtconceptmaptoolsitem.h"
@@ -164,6 +166,17 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   {
     const auto key = GetRandomKey();
     qCritical() << m_ticks << "KeyPress" << QKeySequence(keyboard_modifiers + key).toString();
+
+    ribi::cmap::QtEditConceptDialogCloser c;
+    if (m_qtconceptmap->GetMode() == ribi::cmap::Mode::edit
+      && key == Qt::Key_F2
+      && keyboard_modifiers == Qt::NoModifier
+    )
+    {
+      qApp->processEvents();
+      QTimer::singleShot(100, &c, SLOT(Modify()));
+      QTimer::singleShot(200, &c, SLOT(PressOk()));
+    }
     QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
   }
