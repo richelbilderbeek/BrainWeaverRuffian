@@ -27,7 +27,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest()
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
   );
-  m_qtconceptmap->SetMode(ribi::cmap::Mode::rate);
+  m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
   m_qtconceptmap->show();
   startTimer(10);
 }
