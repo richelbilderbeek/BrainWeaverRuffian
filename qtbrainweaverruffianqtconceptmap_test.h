@@ -4,6 +4,7 @@
 #include "qtconceptmap.h"
 #include <QDialog>
 #include <QEvent>
+#include "qtconceptmapmode.h"
 
 namespace ribi {
 namespace brar {
@@ -14,7 +15,7 @@ class QtConceptMapTest : public QWidget
 
 public:
 
-  QtConceptMapTest();
+  QtConceptMapTest(const ribi::cmap::Mode mode);
   ribi::cmap::QtConceptMap * const m_qtconceptmap;
 
   QPoint GetRandomGlobalPos() noexcept;

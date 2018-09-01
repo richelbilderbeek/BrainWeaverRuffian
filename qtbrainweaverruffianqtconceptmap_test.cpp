@@ -21,15 +21,15 @@
 #include "conceptmaphelper.h"
 #include "qtconceptmaptoolsitem.h"
 
-ribi::brar::QtConceptMapTest::QtConceptMapTest()
+ribi::brar::QtConceptMapTest::QtConceptMapTest(const ribi::cmap::Mode mode)
   : m_qtconceptmap{new ribi::cmap::QtConceptMap}
 {
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
   );
-  m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
+  m_qtconceptmap->SetMode(mode);
   m_qtconceptmap->show();
-  startTimer(10);
+  startTimer(100);
 }
 
 QPoint ribi::brar::QtConceptMapTest::GetRandomGlobalPos() noexcept
@@ -150,6 +150,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 
   ++m_ticks;
 
+  #define SWITCH_MODE
   #ifdef SWITCH_MODE
   if (m_ticks % 100 == 0)
   {

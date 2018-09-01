@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include <QDebug>
+#include <QDesktopWidget>
 #include <QUndoView>
 
 #include "conceptmaphelper.h"
@@ -22,11 +23,13 @@ int main(int argc, char *argv[])
   qCritical() << "RNG seed: " << seed;
   std::srand(seed);
 
-  ribi::brar::QtConceptMapTest t;
+  ribi::brar::QtConceptMapTest t(ribi::cmap::Mode::edit);
   t.m_qtconceptmap->show();
-  t.m_qtconceptmap->setGeometry(32, 32, 1200, 600);
+  QDesktopWidget w;
+
+  t.m_qtconceptmap->setGeometry(0, 0, w.screen()->width(), 8 * w.screen()->height() / 10);
   QUndoView * const undo = new QUndoView(&t.m_qtconceptmap->GetUndo());
   undo->show();
-  undo->setGeometry(32, 632, 1200, 200);
+  undo->setGeometry(0, 8 * w.screen()->height() / 10, w.screen()->width(), 2 * w.screen()->height() / 10);
   return a.exec();
 }
