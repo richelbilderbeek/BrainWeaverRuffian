@@ -29,7 +29,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest(const ribi::cmap::Mode mode)
   );
   m_qtconceptmap->SetMode(mode);
   m_qtconceptmap->show();
-  startTimer(200);
+  startTimer(100);
 }
 
 QPoint ribi::brar::QtConceptMapTest::GetRandomGlobalPos() noexcept

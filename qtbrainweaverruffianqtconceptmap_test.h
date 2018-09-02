@@ -52,22 +52,27 @@ private:
     Qt::ControlModifier,
     Qt::ControlModifier,
     Qt::ControlModifier,
-    Qt::AltModifier,
-    Qt::ShiftModifier | Qt::ControlModifier,
-    Qt::ControlModifier | Qt::AltModifier,
-    Qt::AltModifier | Qt::ShiftModifier,
-    Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
+    Qt::AltModifier
+    //Qt::ShiftModifier | Qt::ControlModifier,
+    //Qt::ControlModifier | Qt::AltModifier,
+    //Qt::AltModifier | Qt::ShiftModifier,
+    //Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
   };
 
   const std::vector<Qt::Key> m_keys{
     Qt::Key_F1,
+    Qt::Key_F1,
+    Qt::Key_F2,
     Qt::Key_F2,
     Qt::Key_F3,
     Qt::Key_1,
     Qt::Key_2,
     Qt::Key_A,
     Qt::Key_Delete,
+    Qt::Key_Delete,
     Qt::Key_Down,
+    Qt::Key_E,
+    Qt::Key_E,
     Qt::Key_E,
     Qt::Key_E,
     Qt::Key_E,
