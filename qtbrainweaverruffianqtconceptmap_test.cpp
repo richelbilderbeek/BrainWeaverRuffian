@@ -29,7 +29,7 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest(const ribi::cmap::Mode mode)
   );
   m_qtconceptmap->SetMode(mode);
   m_qtconceptmap->show();
-  startTimer(100);
+  startTimer(50);
 }
 
 QPoint ribi::brar::QtConceptMapTest::GetRandomGlobalPos() noexcept
@@ -195,8 +195,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     )
     {
       qApp->processEvents();
-      QTimer::singleShot(400, &edit_concept_closer, SLOT(Modify()));
-      QTimer::singleShot(800, &edit_concept_closer, SLOT(PressOk()));
+      QTimer::singleShot(500, &edit_concept_closer, SLOT(ModifyAndOk()));
     }
     else if (m_qtconceptmap->GetMode() == ribi::cmap::Mode::rate
       && key == Qt::Key_F1
@@ -204,8 +203,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     )
     {
       qApp->processEvents();
-      QTimer::singleShot(400, &rate_concept_closer, SLOT(Modify()));
-      QTimer::singleShot(800, &rate_concept_closer, SLOT(PressOk()));
+      QTimer::singleShot(500, &rate_concept_closer, SLOT(ModifyAndOk()));
     }
     else if (m_qtconceptmap->GetMode() == ribi::cmap::Mode::rate
       && key == Qt::Key_F2
@@ -213,8 +211,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     )
     {
       qApp->processEvents();
-      QTimer::singleShot(400, &classify_examples_closer, SLOT(Modify()));
-      QTimer::singleShot(800, &classify_examples_closer, SLOT(PressOk()));
+      QTimer::singleShot(500, &classify_examples_closer, SLOT(ModifyAndOk()));
     }
     QTest::keyPress(m_qtconceptmap, key, keyboard_modifiers);
     return;
