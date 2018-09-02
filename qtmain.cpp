@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
   std::srand(0);
 
   int seed = 2;
-  if (ribi::cmap::OnTravis())
+  //if (ribi::cmap::OnTravis())
   {
     seed = std::time(0);
   }
