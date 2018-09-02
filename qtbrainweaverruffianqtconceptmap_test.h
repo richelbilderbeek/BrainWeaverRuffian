@@ -60,11 +60,15 @@ private:
   };
 
   const std::vector<Qt::Key> m_keys{
-    Qt::Key_F1,
-    Qt::Key_F1,
-    Qt::Key_F2,
-    Qt::Key_F2,
-    Qt::Key_F3,
+//    Qt::Key_F1,
+//    Qt::Key_F1,
+//    Qt::Key_F1,
+//    Qt::Key_F1,
+//    Qt::Key_F2,
+//    Qt::Key_F2,
+//    Qt::Key_F2,
+//    Qt::Key_F2,
+//    Qt::Key_F3,
     Qt::Key_1,
     Qt::Key_2,
     Qt::Key_A,
@@ -96,7 +100,7 @@ private:
   int m_ticks{0};
 
   const bool m_use_keyboard{true};
-  const bool m_use_mouse{true};
+  const bool m_use_mouse{false};
 
   friend std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 };

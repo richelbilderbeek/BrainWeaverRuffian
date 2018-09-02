@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
   {
     seed = std::time(0);
   }
+  //seed = 1535873650;
   qCritical() << "RNG seed: " << seed;
   std::srand(seed);
 
