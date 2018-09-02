@@ -45,28 +45,13 @@ private:
   ///Allowed combinations of keyboard modifiers
   const std::vector<Qt::KeyboardModifiers> m_keyboard_modifiers{
     Qt::NoModifier,
-    Qt::NoModifier,
-    Qt::NoModifier,
-    Qt::NoModifier,
     Qt::ShiftModifier,
     Qt::ControlModifier,
-    Qt::ControlModifier,
-    Qt::ControlModifier,
     Qt::AltModifier
-    //Qt::ShiftModifier | Qt::ControlModifier,
-    //Qt::ControlModifier | Qt::AltModifier,
-    //Qt::AltModifier | Qt::ShiftModifier,
-    //Qt::ControlModifier | Qt::ShiftModifier | Qt::ControlModifier
   };
 
   const std::vector<Qt::Key> m_keys{
 //    Qt::Key_F1,
-//    Qt::Key_F1,
-//    Qt::Key_F1,
-//    Qt::Key_F1,
-//    Qt::Key_F2,
-//    Qt::Key_F2,
-//    Qt::Key_F2,
 //    Qt::Key_F2,
 //    Qt::Key_F3,
     Qt::Key_1,
@@ -100,7 +85,7 @@ private:
   int m_ticks{0};
 
   const bool m_use_keyboard{true};
-  const bool m_use_mouse{false};
+  const bool m_use_mouse{true};
 
   friend std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 };
