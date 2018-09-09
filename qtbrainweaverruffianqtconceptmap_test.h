@@ -35,6 +35,8 @@ private slots:
 
 private:
 
+  const bool m_do_shift_mode{true};
+
   const std::vector<QEvent::Type> m_mouse_event_types{
     QEvent::Type::MouseButtonPress,
     QEvent::Type::MouseButtonRelease,
@@ -51,9 +53,9 @@ private:
   };
 
   const std::vector<Qt::Key> m_keys{
-//    Qt::Key_F1,
-//    Qt::Key_F2,
-//    Qt::Key_F3,
+    Qt::Key_F1,
+    Qt::Key_F2,
+    Qt::Key_F3,
     Qt::Key_1,
     Qt::Key_2,
     Qt::Key_A,

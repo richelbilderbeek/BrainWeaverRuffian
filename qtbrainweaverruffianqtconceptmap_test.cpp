@@ -150,22 +150,21 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
 
   ++m_ticks;
 
-  #define SWITCH_MODE
-  #ifdef SWITCH_MODE
-  if (m_ticks % 100 == 0)
+  if (m_do_shift_mode)
   {
-    m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
+    if (m_ticks % 100 == 0)
+    {
+      m_qtconceptmap->SetMode(ribi::cmap::Mode::edit);
+    }
+    else if (m_ticks % 100 == 45)
+    {
+      m_qtconceptmap->SetMode(ribi::cmap::Mode::rate);
+    }
+    else if (m_ticks % 100 == 90)
+    {
+      m_qtconceptmap->SetMode(ribi::cmap::Mode::uninitialized);
+    }
   }
-  else if (m_ticks % 100 == 45)
-  {
-    m_qtconceptmap->SetMode(ribi::cmap::Mode::rate);
-  }
-  else if (m_ticks % 100 == 90)
-  {
-    m_qtconceptmap->SetMode(ribi::cmap::Mode::uninitialized);
-  }
-  #endif // SWITCH_MODE
-
   if (!ribi::cmap::OnTravis())
   {
     if (m_ticks == 100302)

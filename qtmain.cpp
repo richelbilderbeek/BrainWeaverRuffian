@@ -32,8 +32,9 @@ int main(int argc, char *argv[])
     0,
     0,
     w.screen()->width(),
-    8 * w.screen()->height() / 10
+    10 * w.screen()->height() / 10
   );
+  /*
   QUndoView * const undo = new QUndoView(&t.m_qtconceptmap->GetUndo());
   undo->show();
   undo->setGeometry(
@@ -42,5 +43,6 @@ int main(int argc, char *argv[])
     w.screen()->width(),
     2 * w.screen()->height() / 10
   );
+  */
   return a.exec();
 }
