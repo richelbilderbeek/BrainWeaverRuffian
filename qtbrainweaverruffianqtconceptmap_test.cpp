@@ -22,7 +22,8 @@
 #include "qtconceptmaptoolsitem.h"
 
 ribi::brar::QtConceptMapTest::QtConceptMapTest(const ribi::cmap::Mode mode)
-  : m_qtconceptmap{new ribi::cmap::QtConceptMap}
+  : m_keys{CreateKeys(ribi::cmap::OnTravis())},
+    m_qtconceptmap{new ribi::cmap::QtConceptMap}
 {
   m_qtconceptmap->SetConceptMap(
     ribi::cmap::ConceptMapFactory().GetRated()
@@ -30,6 +31,46 @@ ribi::brar::QtConceptMapTest::QtConceptMapTest(const ribi::cmap::Mode mode)
   m_qtconceptmap->SetMode(mode);
   m_qtconceptmap->show();
   startTimer(10);
+}
+
+std::vector<Qt::Key> ribi::brar::CreateKeys(const bool is_on_travis) noexcept
+{
+  std::vector<Qt::Key> keys{
+    Qt::Key_F3,
+    Qt::Key_1,
+    Qt::Key_2,
+    Qt::Key_A,
+    Qt::Key_Delete,
+    Qt::Key_Delete,
+    Qt::Key_Delete,
+    Qt::Key_Down,
+    Qt::Key_E,
+    Qt::Key_E,
+    Qt::Key_E,
+    Qt::Key_E,
+    Qt::Key_E,
+    Qt::Key_E,
+    //Qt::Key_Equal, //Scale
+    Qt::Key_H,
+    Qt::Key_Left,
+    //Qt::Key_Minus, //Scale
+    Qt::Key_N,
+    Qt::Key_Right,
+    Qt::Key_Space,
+    Qt::Key_T,
+    Qt::Key_Up,
+    Qt::Key_Z
+  };
+  if (!is_on_travis)
+  {
+    keys.push_back(Qt::Key_F1);
+    keys.push_back(Qt::Key_F1);
+    keys.push_back(Qt::Key_F1);
+    keys.push_back(Qt::Key_F2);
+    keys.push_back(Qt::Key_F2);
+    keys.push_back(Qt::Key_F2);
+  }
+  return keys;
 }
 
 QPoint ribi::brar::QtConceptMapTest::GetRandomGlobalPos() noexcept

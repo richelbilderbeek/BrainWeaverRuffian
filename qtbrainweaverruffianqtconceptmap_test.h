@@ -16,7 +16,6 @@ class QtConceptMapTest : public QWidget
 public:
 
   QtConceptMapTest(const ribi::cmap::Mode mode);
-  ribi::cmap::QtConceptMap * const m_qtconceptmap;
 
   QPoint GetRandomGlobalPos() noexcept;
   Qt::Key GetRandomKey() noexcept;
@@ -37,13 +36,6 @@ private:
 
   const bool m_do_shift_mode{true};
 
-  const std::vector<QEvent::Type> m_mouse_event_types{
-    QEvent::Type::MouseButtonPress,
-    QEvent::Type::MouseButtonRelease,
-    QEvent::Type::MouseMove,
-    QEvent::Type::MouseButtonDblClick
-  };
-
   ///Allowed combinations of keyboard modifiers
   const std::vector<Qt::KeyboardModifiers> m_keyboard_modifiers{
     Qt::NoModifier,
@@ -52,37 +44,24 @@ private:
     Qt::AltModifier
   };
 
-  const std::vector<Qt::Key> m_keys{
-    Qt::Key_F1,
-    Qt::Key_F2,
-    Qt::Key_F3,
-    Qt::Key_1,
-    Qt::Key_2,
-    Qt::Key_A,
-    Qt::Key_Delete,
-    Qt::Key_Delete,
-    Qt::Key_Down,
-    Qt::Key_E,
-    Qt::Key_E,
-    Qt::Key_E,
-    Qt::Key_E,
-    Qt::Key_E,
-    //Qt::Key_Equal, //Scale
-    Qt::Key_H,
-    Qt::Key_Left,
-    //Qt::Key_Minus, //Scale
-    Qt::Key_N,
-    Qt::Key_Right,
-    Qt::Key_Space,
-    Qt::Key_T,
-    Qt::Key_Up,
-    Qt::Key_Z
-  };
+  const std::vector<Qt::Key> m_keys;
 
   const std::vector<Qt::MouseButton> m_mouse_buttons{
     Qt::LeftButton,
     Qt::RightButton
   };
+
+  const std::vector<QEvent::Type> m_mouse_event_types{
+    QEvent::Type::MouseButtonPress,
+    QEvent::Type::MouseButtonRelease,
+    QEvent::Type::MouseMove,
+    QEvent::Type::MouseButtonDblClick
+  };
+
+public:
+  ///The QWidget it is about
+  ribi::cmap::QtConceptMap * const m_qtconceptmap;
+private:
 
   int m_ticks{0};
 
@@ -91,6 +70,12 @@ private:
 
   friend std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 };
+
+///Create the keys the Ruffian is allowed to use
+/// @param is_on_travis Must be true when running on Travis
+///   CI. When running on Travis, less keys (F1 and F2) are
+///   used as Travis cannot handle all types of pop-ups
+std::vector<Qt::Key> CreateKeys(const bool is_on_travis = false) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const QtConceptMapTest& t) noexcept;
 QDebug operator<<(QDebug d, const QtConceptMapTest& t) noexcept;
