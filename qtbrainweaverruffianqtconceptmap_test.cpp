@@ -206,7 +206,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
       m_qtconceptmap->SetMode(ribi::cmap::Mode::uninitialized);
     }
   }
-  if (!ribi::cmap::OnTravis())
+  if (ribi::cmap::OnTravis())
   {
     if (m_ticks == 10000)
     {
