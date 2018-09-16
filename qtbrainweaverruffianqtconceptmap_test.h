@@ -40,6 +40,10 @@ private:
   const std::vector<Qt::KeyboardModifiers> m_keyboard_modifiers{
     Qt::NoModifier,
     Qt::ShiftModifier,
+    Qt::ShiftModifier,
+    Qt::ShiftModifier,
+    Qt::ShiftModifier,
+    Qt::ShiftModifier,
     Qt::ControlModifier,
     Qt::AltModifier
   };

@@ -70,6 +70,16 @@ std::vector<Qt::Key> ribi::brar::CreateKeys(const bool is_on_travis) noexcept
     keys.push_back(Qt::Key_F2);
     keys.push_back(Qt::Key_F2);
   }
+  //#define FIX_ISSUE_327
+  #ifdef FIX_ISSUE_327
+  for (int i = 0; i != 10; ++i)
+  {
+    keys.push_back(Qt::Key_Down);
+    keys.push_back(Qt::Key_Left);
+    keys.push_back(Qt::Key_Right);
+    keys.push_back(Qt::Key_Up);
+  }
+  #endif // FIX_ISSUE_327
   return keys;
 }
 
@@ -208,7 +218,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   }
   if (ribi::cmap::OnTravis())
   {
-    if (m_ticks == 1000)
+    if (m_ticks > 10000)
     {
       qCritical() << *this << '\n';
       while (1)
