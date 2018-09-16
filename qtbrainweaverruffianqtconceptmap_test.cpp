@@ -208,7 +208,7 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
   }
   if (ribi::cmap::OnTravis())
   {
-    if (m_ticks == 10000)
+    if (m_ticks == 1000)
     {
       qCritical() << *this << '\n';
       while (1)
