@@ -221,10 +221,6 @@ void ribi::brar::QtConceptMapTest::timerEvent(QTimerEvent *)
     if (m_ticks > 10000)
     {
       qCritical() << *this << '\n';
-      while (1)
-      {
-        qApp->processEvents();
-      }
       qCritical() << "Clean exit at " << m_ticks << " actions";
       std::exit(0);
     }
