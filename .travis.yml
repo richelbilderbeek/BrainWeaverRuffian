@@ -12,7 +12,6 @@ addons:
       - libboost-all-dev
       - libqt5svg5-dev
       - libqwt-qt5-dev
-      - npm
       - qt5-qmake 
       - qt5-default
       - sloccount
@@ -20,6 +19,7 @@ addons:
 
 install: 
   # Check dead links
+  - sudo apt-get install -qq npm
   - npm config set strict-ssl false
   - sudo npm install -g markdown-link-check
   # Check dead links
