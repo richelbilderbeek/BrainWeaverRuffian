@@ -78,7 +78,7 @@ QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
 QMAKE_CXXFLAGS += -Werror
 
 # Qt5
-QT += core gui widgets
+QT += core gui widgets printsupport
 
 # QTest
 QT += testlib
