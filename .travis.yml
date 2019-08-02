@@ -9,7 +9,6 @@ addons:
   apt: 
     packages: 
       - cppcheck
-      - libboost-all-dev
       - libqt5svg5-dev
       - libqwt-qt5-dev
       - qt5-qmake 
@@ -18,6 +17,9 @@ addons:
       - valgrind
 
 install: 
+  - sudo apt update -qq
+  # Boost
+  - sudo apt install -qq libboost-all-dev
   # Check dead links
   - sudo apt-get install -qq npm
   - npm config set strict-ssl false
