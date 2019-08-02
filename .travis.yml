@@ -9,10 +9,6 @@ addons:
   apt: 
     packages: 
       - cppcheck
-      - libqt5svg5-dev
-      - libqwt-qt5-dev
-      - qt5-qmake 
-      - qt5-default
       - sloccount
       - valgrind
 
@@ -20,6 +16,8 @@ install:
   - sudo apt update -qq
   # Boost
   - sudo apt install -qq libboost-all-dev
+  # Qt
+  - sudo apt install -qq qt5-qmake qt5-default libqt5svg5-dev libqwt-qt5-dev
   # Check dead links
   - sudo apt-get install -qq npm
   - npm config set strict-ssl false
