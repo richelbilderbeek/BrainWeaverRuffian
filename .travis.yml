@@ -24,7 +24,7 @@ install:
   - sudo npm install -g markdown-link-check
   # Check dead links
   - rm .travis.yml
-  - ./scripts/check_dead_links
+  - ./scripts/check_dead_links || true
   # Codecov
   - sudo pip install codecov
   # OCLint
