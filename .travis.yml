@@ -5,13 +5,6 @@ compiler:
 
 cache: packages
 
-addons:
-  apt: 
-    packages: 
-      - cppcheck
-      - sloccount
-      - valgrind
-
 install: 
   - sudo apt update -qq
   # Boost
@@ -22,6 +15,12 @@ install:
   - sudo apt-get install -qq npm
   - npm config set strict-ssl false
   - sudo npm install -g markdown-link-check
+  # cppcheck
+  - sudo apt install -qq cppcheck
+  # sloccount
+  - sudo apt install -qq sloccount
+  # valgrind
+  - sudo apt install -qq valgrind 
   # Check dead links
   - rm .travis.yml
   - ./scripts/check_dead_links || true
