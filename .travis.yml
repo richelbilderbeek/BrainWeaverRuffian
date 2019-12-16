@@ -12,9 +12,9 @@ install:
   # Qt
   - sudo apt install -qq qt5-qmake qt5-default libqt5svg5-dev libqwt-qt5-dev
   # Check dead links
-  - sudo apt-get install -qq npm
-  - npm config set strict-ssl false
-  - sudo npm install -g markdown-link-check
+  #- sudo apt-get install -qq npm
+  #- npm config set strict-ssl false
+  #- sudo npm install -g markdown-link-check
   # cppcheck
   - sudo apt install -qq cppcheck
   # sloccount
@@ -22,8 +22,8 @@ install:
   # valgrind
   - sudo apt install -qq valgrind 
   # Check dead links
-  - rm .travis.yml
-  - ./scripts/check_dead_links || true
+  #- rm .travis.yml
+  #- ./scripts/check_dead_links || true
   # Codecov
   - sudo pip install codecov
   # OCLint
